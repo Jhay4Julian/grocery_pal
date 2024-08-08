@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'components/item_tile.dart';
+
 class GroceryPage extends StatefulWidget {
   const GroceryPage({super.key});
 
@@ -9,6 +11,21 @@ class GroceryPage extends StatefulWidget {
 
 class _GroceryPageState extends State<GroceryPage> {
   final TextEditingController _controller = TextEditingController();
+  List<String> items = [];
+
+  void _addItem() {
+    setState(() {
+      items.add(_controller.text);
+      _controller.clear();
+    });
+  }
+
+  void _deleteItem(String item) {
+    setState(() {
+      items.remove(item);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,7 +70,7 @@ class _GroceryPageState extends State<GroceryPage> {
                           SizedBox(
                             height: 33,
                             child: MaterialButton(
-                              onPressed: () {},
+                              onPressed: _addItem,
                               color: Colors.blue[300],
                               child: const Padding(
                                 padding: EdgeInsets.only(left: 8, right: 8),
@@ -66,10 +83,20 @@ class _GroceryPageState extends State<GroceryPage> {
                                 ),
                               ),
                             ),
-                          )
+                          ),
                         ],
                       ),
                     ),
+                    const SizedBox(height: 20),
+                    Column(
+                      children: items.map((item) {
+                        return ItemTile(
+                          item: item,
+                          key: ValueKey(item),
+                          onPressed: () => _deleteItem(item),
+                        );
+                      }).toList(),
+                    )
                   ],
                 ),
               ),
