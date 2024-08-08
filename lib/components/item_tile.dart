@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 
 class ItemTile extends StatefulWidget {
   final String item;
+  final VoidCallback onTap;
   final VoidCallback onPressed;
   ItemTile({
     super.key,
     required this.item,
     required this.onPressed,
+    required this.onTap,
   });
 
   @override
@@ -45,13 +47,24 @@ class _ItemTileState extends State<ItemTile> {
               ),
             ],
           ),
-          IconButton(
-            onPressed: widget.onPressed,
-            icon: const Icon(
-              Icons.delete,
-              color: Colors.red,
-            ),
-          ),
+          Row(
+            children: [
+              IconButton(
+                onPressed: widget.onTap,
+                icon: const Icon(
+                  Icons.edit,
+                  color: Colors.blueAccent,
+                ),
+              ),
+              IconButton(
+                onPressed: widget.onPressed,
+                icon: const Icon(
+                  Icons.delete,
+                  color: Colors.red,
+                ),
+              ),
+            ],
+          )
         ],
       ),
     );
