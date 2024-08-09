@@ -15,14 +15,31 @@ class _GroceryPageState extends State<GroceryPage> {
 
   void _addItem() {
     setState(() {
-      items.add(_controller.text);
-      _controller.clear();
+      if (_controller.text.isEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Input cannot be empty'),
+          ),
+        );
+      } else {
+        items.add(_controller.text);
+        _controller.clear();
+      }
     });
   }
 
   void _deleteItem(String item) {
     setState(() {
       items.remove(item);
+    });
+  }
+
+  void _updateItem(String oldItem, String newItem) {
+    setState(() {
+      int index = items.indexOf(oldItem);
+      if (index != -1) {
+        items[index] = newItem;
+      }
     });
   }
 
@@ -71,7 +88,7 @@ class _GroceryPageState extends State<GroceryPage> {
                             height: 33,
                             child: MaterialButton(
                               onPressed: _addItem,
-                              color: Colors.blue[300],
+                              color: Colors.purple[800],
                               child: const Padding(
                                 padding: EdgeInsets.only(left: 8, right: 8),
                                 child: Text(
@@ -94,6 +111,7 @@ class _GroceryPageState extends State<GroceryPage> {
                           item: item,
                           key: ValueKey(item),
                           onPressed: () => _deleteItem(item),
+                          onUpdate: (newItem) => _updateItem(item, newItem),
                         );
                       }).toList(),
                     )
