@@ -73,28 +73,45 @@ class _ItemTileState extends State<ItemTile> {
     final TextEditingController editController =
         TextEditingController(text: widget.item);
 
+    String? errorText;
+
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          content: TextField(
-            controller: editController,
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () {
-                widget.onUpdate(editController.text);
-                Navigator.of(context).pop();
-              },
-              child: const Text('Update'),
-            ),
-          ],
+        // StatefulBuilder to manage state within the dialog.
+        //Can call setState within the dialog to update the UI when needed.
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              content: TextField(
+                controller: editController,
+                decoration: InputDecoration(
+                  errorText: errorText,
+                ),
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('Cancel'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    if (editController.text.isNotEmpty) {
+                      widget.onUpdate(editController.text);
+                      Navigator.of(context).pop();
+                    } else {
+                      setState(() {
+                        errorText = 'Input cannot be empty';
+                      });
+                    }
+                  },
+                  child: const Text('Update'),
+                ),
+              ],
+            );
+          },
         );
       },
     );
