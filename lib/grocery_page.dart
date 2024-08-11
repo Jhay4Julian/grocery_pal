@@ -18,12 +18,17 @@ class _GroceryPageState extends State<GroceryPage> {
       if (_controller.text.isEmpty) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
+            behavior: SnackBarBehavior.floating,
+            duration: Duration(seconds: 1),
+            backgroundColor: Colors.red,
+            margin: EdgeInsets.all(20),
             content: Text('Input cannot be empty'),
           ),
         );
       } else {
         items.add(_controller.text);
         _controller.clear();
+        FocusScope.of(context).unfocus();
       }
     });
   }
@@ -31,6 +36,15 @@ class _GroceryPageState extends State<GroceryPage> {
   void _deleteItem(String item) {
     setState(() {
       items.remove(item);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          duration: Duration(seconds: 1),
+          behavior: SnackBarBehavior.floating,
+          backgroundColor: Colors.red,
+          margin: EdgeInsets.all(20),
+          content: Text('Deleted'),
+        ),
+      );
     });
   }
 
@@ -46,81 +60,107 @@ class _GroceryPageState extends State<GroceryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[100],
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(20),
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(5),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  children: [
-                    const Text(
-                      'Grocery Pal',
-                      style: TextStyle(fontSize: 25),
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: Column(
+          children: [
+            const SizedBox(height: 30),
+            Padding(
+              padding: const EdgeInsets.all(20),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(5),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Colors.black12,
+                      blurRadius: 5,
+                      spreadRadius: 1,
                     ),
-                    const SizedBox(height: 20),
-                    SizedBox(
-                      height: 35,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            child: TextField(
-                              controller: _controller,
-                              decoration: InputDecoration(
-                                contentPadding: const EdgeInsets.only(
-                                    top: 0, left: 10, right: 10),
-                                filled: true,
-                                fillColor: Colors.grey[200],
-                                border: const OutlineInputBorder(
-                                  borderSide: BorderSide.none,
+                  ],
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 20),
+                      const Text(
+                        'Grocery Pal',
+                        style: TextStyle(
+                            fontSize: 25, fontWeight: FontWeight.w500),
+                      ),
+                      const SizedBox(height: 30),
+                      SizedBox(
+                        height: 35,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              child: TextField(
+                                controller: _controller,
+                                decoration: InputDecoration(
+                                  contentPadding: const EdgeInsets.only(
+                                    top: 0,
+                                    left: 10,
+                                    right: 10,
+                                  ),
+                                  filled: true,
+                                  fillColor: Colors.grey[250],
+                                  border: const OutlineInputBorder(
+                                    borderSide: BorderSide.none,
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(8),
+                                      bottomLeft: Radius.circular(8),
+                                    ),
+                                  ),
                                 ),
+                                style: const TextStyle(fontSize: 15),
                               ),
                             ),
-                          ),
-                          SizedBox(
-                            height: 33,
-                            child: MaterialButton(
-                              onPressed: _addItem,
-                              color: Colors.purple[800],
-                              child: const Padding(
-                                padding: EdgeInsets.only(left: 8, right: 8),
-                                child: Text(
-                                  'Add Item',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w400,
+                            InkWell(
+                              onTap: _addItem,
+                              child: Container(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 7),
+                                decoration: const BoxDecoration(
+                                    color: Colors.lightGreen,
+                                    borderRadius: BorderRadius.only(
+                                        topRight: Radius.circular(8),
+                                        bottomRight: Radius.circular(8))),
+                                child: const Center(
+                                  child: Text(
+                                    'Add Item',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      letterSpacing: 1,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w400,
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 20),
-                    Column(
-                      children: items.map((item) {
-                        return ItemTile(
-                          item: item,
-                          key: ValueKey(item),
-                          onPressed: () => _deleteItem(item),
-                          onUpdate: (newItem) => _updateItem(item, newItem),
-                        );
-                      }).toList(),
-                    )
-                  ],
+                      const SizedBox(height: 30),
+                      Column(
+                        children: items.map((item) {
+                          return ItemTile(
+                            item: item,
+                            key: ValueKey(item),
+                            onPressed: () => _deleteItem(item),
+                            onUpdate: (newItem) => _updateItem(item, newItem),
+                          );
+                        }).toList(),
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
