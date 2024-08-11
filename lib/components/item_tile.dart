@@ -19,52 +19,66 @@ class _ItemTileState extends State<ItemTile> {
   bool ticked = false;
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Column(
       children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Checkbox(
-              value: ticked,
-              onChanged: (value) {
-                setState(() {
-                  ticked = !ticked;
-                });
-              },
-            ),
-            const SizedBox(width: 10),
-            Text(
-              widget.item,
-              style: TextStyle(
-                fontSize: 16,
-                letterSpacing: 1,
-                decoration:
-                    ticked ? TextDecoration.lineThrough : TextDecoration.none,
-              ),
-            ),
-          ],
+        const Padding(
+          padding: EdgeInsets.only(top: 10, bottom: 10, left: 35),
+          child: Divider(
+            thickness: 0.5,
+          ),
         ),
         Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            IconButton(
-              onPressed: () {
-                _showUpdateDialog(context);
-              },
-              icon: const Icon(
-                Icons.edit,
-                color: Colors.blueGrey,
-              ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Checkbox(
+                  value: ticked,
+                  onChanged: (value) {
+                    setState(() {
+                      ticked = !ticked;
+                    });
+                  },
+                ),
+                const SizedBox(width: 10),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width / 2,
+                  child: Text(
+                    widget.item,
+                    style: TextStyle(
+                      fontSize: 16,
+                      letterSpacing: 1,
+                      decoration: ticked
+                          ? TextDecoration.lineThrough
+                          : TextDecoration.none,
+                    ),
+                  ),
+                ),
+              ],
             ),
-            IconButton(
-              onPressed: widget.onPressed,
-              icon: const Icon(
-                Icons.delete,
-                color: Colors.red,
-              ),
-            ),
+            Row(
+              children: [
+                IconButton(
+                  onPressed: () {
+                    _showUpdateDialog(context);
+                  },
+                  icon: const Icon(
+                    Icons.edit,
+                    color: Colors.blueGrey,
+                  ),
+                ),
+                IconButton(
+                  onPressed: widget.onPressed,
+                  icon: const Icon(
+                    Icons.delete,
+                    color: Colors.red,
+                  ),
+                ),
+              ],
+            )
           ],
-        )
+        ),
       ],
     );
   }
@@ -94,9 +108,12 @@ class _ItemTileState extends State<ItemTile> {
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: const Text('Cancel'),
+                  child: const Text(
+                    'Cancel',
+                    style: TextStyle(color: Colors.red),
+                  ),
                 ),
-                TextButton(
+                ElevatedButton(
                   onPressed: () {
                     if (editController.text.isNotEmpty) {
                       widget.onUpdate(editController.text);
