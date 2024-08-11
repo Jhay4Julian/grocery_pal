@@ -30,32 +30,34 @@ class _ItemTileState extends State<ItemTile> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Checkbox(
-                  value: ticked,
-                  onChanged: (value) {
-                    setState(() {
-                      ticked = !ticked;
-                    });
-                  },
-                ),
-                const SizedBox(width: 10),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width / 2,
-                  child: Text(
-                    widget.item,
-                    style: TextStyle(
-                      fontSize: 16,
-                      letterSpacing: 1,
-                      decoration: ticked
-                          ? TextDecoration.lineThrough
-                          : TextDecoration.none,
+            Expanded(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Checkbox(
+                    value: ticked,
+                    onChanged: (value) {
+                      setState(() {
+                        ticked = !ticked;
+                      });
+                    },
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Text(
+                      widget.item,
+                      style: TextStyle(
+                        fontSize: 16,
+                        decoration: ticked
+                            ? TextDecoration.lineThrough
+                            : TextDecoration.none,
+                      ),
+                      softWrap: true,
+                      maxLines: null,
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
             Row(
               children: [
