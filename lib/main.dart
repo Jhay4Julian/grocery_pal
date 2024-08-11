@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:grocery_pal/grocery_page.dart';
+import 'package:grocery_pal/task_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,13 +11,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Grocery Pal',
+      title: 'Tasks',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
         useMaterial3: true,
       ),
-      home: const GroceryPage(),
+      home: const TaskPage(),
     );
   }
 }
