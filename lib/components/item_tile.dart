@@ -65,16 +65,19 @@ class _ItemTileState extends State<ItemTile> {
                 if (value == 0) {
                   Future.delayed(
                       Duration.zero, () => _showUpdateDialog(context));
+                } else if (value == 1) {
+                  Future.delayed(
+                      Duration.zero, () => _showDeleteDialog(context));
                 }
               },
               itemBuilder: (BuildContext context) {
-                return [
+                return const [
                   PopupMenuItem(
                     value: 0,
                     child: Text('Edit'),
                   ),
                   PopupMenuItem(
-                    onTap: widget.onPressed,
+                    value: 1,
                     child: Text('Delete'),
                   ),
                 ];
@@ -132,6 +135,39 @@ class _ItemTileState extends State<ItemTile> {
               ],
             );
           },
+        );
+      },
+    );
+  }
+
+  void _showDeleteDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: const Padding(
+            padding: EdgeInsets.only(top: 15, left: 15),
+            child: Text(
+              'Are you sure?',
+              style: TextStyle(fontSize: 16),
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text(
+                'Cancel',
+                style: TextStyle(color: Colors.blueGrey),
+              ),
+            ),
+            ElevatedButton(
+              onPressed: widget.onPressed,
+              child: const Text(
+                'Delete',
+                style: TextStyle(color: Colors.red),
+              ),
+            ),
+          ],
         );
       },
     );
