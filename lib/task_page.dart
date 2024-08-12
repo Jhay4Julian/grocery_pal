@@ -36,6 +36,7 @@ class _TaskPageState extends State<TaskPage> {
   void _deleteItem(String item) {
     setState(() {
       items.remove(item);
+      Navigator.of(context).pop();
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           duration: Duration(seconds: 1),
