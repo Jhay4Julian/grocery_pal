@@ -59,26 +59,27 @@ class _ItemTileState extends State<ItemTile> {
                 ],
               ),
             ),
-            Row(
-              children: [
-                IconButton(
-                  onPressed: () {
-                    _showUpdateDialog(context);
-                  },
-                  icon: const Icon(
-                    Icons.edit,
-                    color: Colors.blueGrey,
+            PopupMenuButton(
+              onSelected: (value) {
+                // Future.delayed to show the dialog after the popup menu is closed
+                if (value == 0) {
+                  Future.delayed(
+                      Duration.zero, () => _showUpdateDialog(context));
+                }
+              },
+              itemBuilder: (BuildContext context) {
+                return [
+                  PopupMenuItem(
+                    value: 0,
+                    child: Text('Edit'),
                   ),
-                ),
-                IconButton(
-                  onPressed: widget.onPressed,
-                  icon: const Icon(
-                    Icons.delete,
-                    color: Colors.red,
+                  PopupMenuItem(
+                    onTap: widget.onPressed,
+                    child: Text('Delete'),
                   ),
-                ),
-              ],
-            )
+                ];
+              },
+            ),
           ],
         ),
       ],
@@ -112,7 +113,7 @@ class _ItemTileState extends State<ItemTile> {
                   },
                   child: const Text(
                     'Cancel',
-                    style: TextStyle(color: Colors.red),
+                    style: TextStyle(color: Colors.blueGrey),
                   ),
                 ),
                 ElevatedButton(
