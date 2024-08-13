@@ -64,106 +64,118 @@ class _TaskPageState extends State<TaskPage> {
       backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(5),
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Colors.black12,
-                        blurRadius: 5,
-                        spreadRadius: 1,
-                      ),
-                    ],
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: Column(
-                      children: [
-                        const SizedBox(height: 20),
-                        const Text(
-                          'Tasks',
-                          style: TextStyle(
-                              fontSize: 25, fontWeight: FontWeight.w500),
+          child: GestureDetector(
+            onTap: () {
+              FocusScope.of(context).unfocus();
+            },
+            child: Column(
+              children: [
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(5),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Colors.black12,
+                          blurRadius: 5,
+                          spreadRadius: 1,
                         ),
-                        const SizedBox(height: 40),
-                        SizedBox(
-                          height: 35,
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Expanded(
-                                child: TextField(
-                                  controller: _controller,
-                                  decoration: InputDecoration(
-                                    contentPadding: const EdgeInsets.only(
-                                      top: 0,
-                                      left: 10,
-                                      right: 10,
-                                    ),
-                                    filled: true,
-                                    fillColor: Colors.grey[250],
-                                    border: const OutlineInputBorder(
-                                      borderSide: BorderSide.none,
-                                      borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(8),
-                                        bottomLeft: Radius.circular(8),
-                                      ),
-                                    ),
-                                  ),
-                                  style: const TextStyle(fontSize: 15),
-                                ),
-                              ),
-                              InkWell(
-                                onTap: _addItem,
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 15),
-                                  decoration: const BoxDecoration(
-                                    color: Colors.green,
-                                    borderRadius: BorderRadius.only(
-                                      topRight: Radius.circular(8),
-                                      bottomRight: Radius.circular(8),
-                                    ),
-                                  ),
-                                  child: const Center(
-                                    child: Text(
-                                      'Save',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        letterSpacing: 1,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(height: 30),
-                        Column(
-                          children: items.map((item) {
-                            return ItemTile(
-                              item: item,
-                              key: ValueKey(item),
-                              onPressed: () => _deleteItem(item),
-                              onUpdate: (newItem) => _updateItem(item, newItem),
-                            );
-                          }).toList(),
-                        )
                       ],
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 20, bottom: 20),
+                      child: Column(
+                        children: [
+                          const SizedBox(height: 20),
+                          const Text(
+                            'Tasks',
+                            style: TextStyle(
+                                fontSize: 25, fontWeight: FontWeight.w500),
+                          ),
+                          const SizedBox(height: 40),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: SizedBox(
+                              height: 35,
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Expanded(
+                                    child: TextField(
+                                      controller: _controller,
+                                      decoration: InputDecoration(
+                                        contentPadding: const EdgeInsets.only(
+                                          top: 0,
+                                          left: 10,
+                                          right: 10,
+                                        ),
+                                        filled: true,
+                                        fillColor: Colors.grey[250],
+                                        border: const OutlineInputBorder(
+                                          borderSide: BorderSide.none,
+                                          borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(8),
+                                            bottomLeft: Radius.circular(8),
+                                          ),
+                                        ),
+                                      ),
+                                      style: const TextStyle(fontSize: 15),
+                                    ),
+                                  ),
+                                  InkWell(
+                                    onTap: _addItem,
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 15),
+                                      decoration: const BoxDecoration(
+                                        color: Colors.green,
+                                        borderRadius: BorderRadius.only(
+                                          topRight: Radius.circular(8),
+                                          bottomRight: Radius.circular(8),
+                                        ),
+                                      ),
+                                      child: const Center(
+                                        child: Text(
+                                          'Save',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            letterSpacing: 1,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w400,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 30),
+                          Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Column(
+                              children: items.map((item) {
+                                return ItemTile(
+                                  item: item,
+                                  key: ValueKey(item),
+                                  onPressed: () => _deleteItem(item),
+                                  onUpdate: (newItem) =>
+                                      _updateItem(item, newItem),
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
