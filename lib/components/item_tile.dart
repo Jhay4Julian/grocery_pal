@@ -113,10 +113,21 @@ class _ItemTileState extends State<ItemTile> {
         return StatefulBuilder(
           builder: (context, setState) {
             return AlertDialog(
-              content: TextField(
-                controller: editController,
-                decoration: InputDecoration(
-                  errorText: errorText,
+              content: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: SizedBox(
+                  height: 100,
+                  child: TextField(
+                    controller: editController,
+                    expands: true,
+                    maxLines: null,
+                    minLines: null,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                      errorText: errorText,
+                    ),
+                  ),
                 ),
               ),
               actions: [
