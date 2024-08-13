@@ -69,6 +69,7 @@ class _ItemTileState extends State<ItemTile> {
               ),
             ),
             PopupMenuButton(
+              position: PopupMenuPosition.under,
               onSelected: (value) {
                 // Future.delayed to show the dialog after the popup menu is closed
                 if (value == 0) {
