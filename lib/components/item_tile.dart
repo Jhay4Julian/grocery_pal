@@ -17,14 +17,15 @@ class ItemTile extends StatefulWidget {
 
 class _ItemTileState extends State<ItemTile> {
   bool ticked = false;
+  bool isShort = true;
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         const Padding(
-          padding: EdgeInsets.only(top: 10, bottom: 10, left: 35),
+          padding: EdgeInsets.only(top: 5, bottom: 5),
           child: Divider(
-            thickness: 0.5,
+            thickness: 0.3,
           ),
         ),
         Row(
@@ -44,16 +45,24 @@ class _ItemTileState extends State<ItemTile> {
                   ),
                   const SizedBox(width: 10),
                   Expanded(
-                    child: Text(
-                      widget.item,
-                      style: TextStyle(
-                        fontSize: 16,
-                        decoration: ticked
-                            ? TextDecoration.lineThrough
-                            : TextDecoration.none,
+                    child: InkWell(
+                      onTap: () {
+                        setState(() {
+                          isShort = !isShort;
+                        });
+                      },
+                      child: Text(
+                        widget.item,
+                        style: TextStyle(
+                          fontSize: 16,
+                          decoration: ticked
+                              ? TextDecoration.lineThrough
+                              : TextDecoration.none,
+                        ),
+                        softWrap: true,
+                        maxLines: isShort ? 2 : null,
+                        overflow: isShort ? TextOverflow.ellipsis : null,
                       ),
-                      softWrap: true,
-                      maxLines: null,
                     ),
                   ),
                 ],
