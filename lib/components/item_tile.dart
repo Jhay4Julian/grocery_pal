@@ -119,12 +119,14 @@ class _ItemTileState extends State<ItemTile> {
                   height: 100,
                   child: TextField(
                     controller: editController,
+                    textAlignVertical: TextAlignVertical.top,
                     expands: true,
                     maxLines: null,
                     minLines: null,
                     decoration: InputDecoration(
+                      contentPadding: const EdgeInsets.fromLTRB(10, 15, 10, 15),
                       border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10)),
+                          borderRadius: BorderRadius.circular(8)),
                       errorText: errorText,
                     ),
                   ),
